@@ -1,0 +1,86 @@
+:root {
+  --strongPass: #58a857;
+  --weekPass: #f67c54;
+  --badPass: #ce422d;
+}
+
+.main-content {
+  width: 100vw;
+  min-height: calc(100vh - 63px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e7ebf0;
+}
+.pass-card {
+  width: 80vw;
+  height: 27vh;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  /* box-shadow: none !important; */
+}
+.password {
+  max-width: 50vw;
+}
+.pass-options {
+  min-height: 50vh;
+  width: 70vw;
+  margin: 0;
+  padding: 25px 40px;
+}
+
+.password-display {
+  display: flex;
+  gap: 10px;
+  width: 85%;
+  height: 45%;
+
+  margin-top: -20px;
+  color: white;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e7ebf0;
+}
+
+.icons {
+  font-size: 2rem !important;
+  cursor: pointer;
+  transition: transform 0.5s !important;
+}
+
+.white {
+  color: white;
+}
+.rotate-refresh {
+  transform: rotate(180deg);
+}
+.label {
+  text-transform: capitalize;
+}
+.check-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.slider {
+  margin-top: 60px !important;
+}
+.pass-options > p {
+  font-size: 1.1em;
+}
+.pass-status {
+  position: absolute;
+  left: 7.5%;
+  bottom: 10%;
+  color: rgb(227, 226, 226);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}

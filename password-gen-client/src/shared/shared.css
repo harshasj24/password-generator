@@ -1,0 +1,13 @@
+.link {
+  color: black !important;
+}
+
+.home:hover {
+  text-decoration: none !important;
+}
+.home:active {
+  transform: rotate(67deg);
+  color: red !important;
+}
+
+

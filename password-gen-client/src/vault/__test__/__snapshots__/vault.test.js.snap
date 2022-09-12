@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing vault component it should render the component 1`] = `
+<div>
+  <div
+    className="main"
+  >
+    <div
+      className="banner"
+    >
+      <h2
+        className="text-light mt-3"
+      >
+        Welcome To Vault
+      </h2>
+    </div>
+    <div
+      className="table"
+    >
+      <div>
+        <div
+          className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-11xur9t-MuiPaper-root-MuiTableContainer-root"
+        >
+          <table
+            className="MuiTable-root css-rqglhn-MuiTable-root"
+            role={null}
+          >
+            <thead
+              className="MuiTableHead-root css-197n1ah-MuiTableHead-root"
+              role={null}
+            >
+              <tr
+                className="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
+                role={null}
+              >
+                <th
+                  aria-sort={null}
+                  className="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                  scope="col"
+                >
+                   
+                  <h6>
+                    Website
+                  </h6>
+                   
+                </th>
+                <th
+                  aria-sort={null}
+                  className="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                  scope="col"
+                >
+                  <h6>
+                     password
+                  </h6>
+                   
+                </th>
+                <th
+                  aria-sort={null}
+                  className="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                  scope="col"
+                >
+                   
+                  <h6>
+                    Last Modified
+                  </h6>
+                   
+                </th>
+                <th
+                  aria-sort={null}
+                  className="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+                  scope="col"
+                >
+                  <h6>
+                    Actions
+                  </h6>
+                   
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              className="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+              data-testid="tableBody"
+              role={null}
+            />
+          </table>
+        </div>
+      </div>
+    </div>
+    <div
+      className="model"
+    />
+  </div>
+</div>
+`;

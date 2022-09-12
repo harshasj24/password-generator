@@ -1,0 +1,68 @@
+.auth {
+  overflow: hidden;
+  height: calc(100vh);
+}
+.auth__images {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("https://cdn.pixabay.com/photo/2020/12/18/16/56/laptop-5842509_1280.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: white;
+  /* justify-content: center; */
+}
+
+.auth__images__logo {
+  margin-top: 20%;
+}
+.auth__images__logo > .logo {
+  font-size: 70px;
+}
+.auth__images,
+.auth__images__heading {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.auth__images__body--margin {
+  margin-top: 10%;
+}
+.images__body__button {
+  color: white !important;
+  border: 1px solid white !important;
+  margin-top: 40px !important;
+}
+.svg {
+  width: 25%;
+  height: 25%;
+}
+
+.svg > img {
+  height: 100%;
+  width: 100%;
+}
+.success-icon {
+  animation: zoom 2s ease-in-out infinite;
+}
+
+@keyframes zoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+}
+.reg {
+  outline: none !important;
+}

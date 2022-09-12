@@ -1,0 +1,318 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Table password component it should render the table password component 1`] = `
+<div>
+  <div>
+    <div
+      className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiTableContainer-root css-11xur9t-MuiPaper-root-MuiTableContainer-root"
+    >
+      <table
+        className="MuiTable-root css-rqglhn-MuiTable-root"
+        role={null}
+      >
+        <thead
+          className="MuiTableHead-root css-197n1ah-MuiTableHead-root"
+          role={null}
+        >
+          <tr
+            className="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
+            role={null}
+          >
+            <th
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+              scope="col"
+            >
+               
+              <h6>
+                Website
+              </h6>
+               
+            </th>
+            <th
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+              scope="col"
+            >
+              <h6>
+                 password
+              </h6>
+               
+            </th>
+            <th
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+              scope="col"
+            >
+               
+              <h6>
+                Last Modified
+              </h6>
+               
+            </th>
+            <th
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1ygcj2i-MuiTableCell-root"
+              scope="col"
+            >
+              <h6>
+                Actions
+              </h6>
+               
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          className="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+          data-testid="tableBody"
+          role={null}
+        >
+          <tr
+            className="MuiTableRow-root css-1q1u3t4-MuiTableRow-root"
+            role={null}
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              G pay
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <button
+                className="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                data-testid="copy0"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onContextMenu={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                copy
+              </button>
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              Just now
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <button
+                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onContextMenu={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                change 
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                  data-testid="LaunchIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          <tr
+            className="MuiTableRow-root css-1q1u3t4-MuiTableRow-root"
+            role={null}
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              paytm
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <button
+                className="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                data-testid="copy1"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onContextMenu={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                copy
+              </button>
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              Just now
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <button
+                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onContextMenu={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                change 
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                  data-testid="LaunchIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          <tr
+            className="MuiTableRow-root css-1q1u3t4-MuiTableRow-root"
+            role={null}
+          >
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              phone pay
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <button
+                className="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                data-testid="copy2"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onContextMenu={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                copy
+              </button>
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              Just now
+            </td>
+            <td
+              aria-sort={null}
+              className="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ex1afd-MuiTableCell-root"
+            >
+              <button
+                className="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onContextMenu={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
+              >
+                change 
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                  data-testid="LaunchIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
