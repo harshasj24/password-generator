@@ -1,0 +1,123 @@
+
+.text--0 {
+    font-size: 0rem;
+    line-height: 0rem;
+}
+
+.text--25 {
+    font-size: 0.25rem;
+    line-height: 0.2875rem;
+}
+
+.text--50 {
+    font-size: 0.5rem;
+    line-height: 0.575rem;
+}
+
+.text--75 {
+    font-size: 0.75rem;
+    line-height: 0.8625rem;
+}
+
+.text--100 {
+    font-size: 1rem;
+    line-height: 1.15rem;
+}
+
+.text--125 {
+    font-size: 1.25rem;
+    line-height: 1.4375rem;
+}
+
+.text--150 {
+    font-size: 1.5rem;
+    line-height: 1.725rem;
+}
+
+.text--175 {
+    font-size: 1.75rem;
+    line-height: 2.0125rem;
+}
+
+.text--200 {
+    font-size: 2rem;
+    line-height: 2.3rem;
+}
+
+.text--225 {
+    font-size: 2.25rem;
+    line-height: 2.5875rem;
+}
+
+.text--250 {
+    font-size: 2.5rem;
+    line-height: 2.875rem;
+}
+
+.text--275 {
+    font-size: 2.75rem;
+    line-height: 3.1625rem;
+}
+
+.text--300 {
+    font-size: 3rem;
+    line-height: 3.45rem;
+}
+
+.text--325 {
+    font-size: 3.25rem;
+    line-height: 3.7375rem;
+}
+
+.text--350 {
+    font-size: 3.5rem;
+    line-height: 4.025rem;
+}
+
+.text--375 {
+    font-size: 3.75rem;
+    line-height: 4.3125rem;
+}
+
+.text--400 {
+    font-size: 4rem;
+    line-height: 4.6rem;
+}
+
+.text--425 {
+    font-size: 4.25rem;
+    line-height: 4.8875rem;
+}
+
+.text--450 {
+    font-size: 4.5rem;
+    line-height: 5.175rem;
+}
+
+.text--475 {
+    font-size: 4.75rem;
+    line-height: 5.4625rem;
+}
+
+.text--500 {
+    font-size: 5rem;
+    line-height: 4rem;
+}
+
+.text--color-white {
+    color: white;
+}
+
+.text--color-black {
+    color: black;
+}
+
+.text--bold {
+    font-weight: 700;
+}
+.text--nowrap {
+    white-space: nowrap;
+}
+.text--allCaps {
+    text-transform: uppercase;
+}

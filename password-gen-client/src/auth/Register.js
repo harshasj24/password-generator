@@ -55,8 +55,14 @@ const Register = () => {
     navigate("/login");
   };
   const validationSchema = yup.object({
-    fName: yup.string().required("please provide your first name"),
-    lName: yup.string().required("please provide your last name"),
+    fName: yup
+      .string()
+      .required("please provide your first name")
+      .max(20, "First name should contain only 20 characters"),
+    lName: yup
+      .string()
+      .required("please provide your last name")
+      .max(20, "Last name should contain only 20 characters"),
     email: yup
       .string()
       .required("Please provide your email address")

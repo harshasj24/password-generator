@@ -1,17 +1,18 @@
 :root {
-  --strongPass: #58a857;
+  --strongPass: #73ba72;
   --weekPass: #f67c54;
   --badPass: #ce422d;
 }
 
 .main-content {
-  width: 100vw;
-  min-height: calc(100vh - 63px);
+  /* width: 100vw; */
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #e7ebf0;
+  row-gap: 20px;
 }
 .pass-card {
   width: 80vw;
@@ -26,21 +27,19 @@
   /* box-shadow: none !important; */
 }
 .password {
-  max-width: 50vw;
+  width: fit-content;
 }
 .pass-options {
   min-height: 50vh;
-  width: 70vw;
+  width: 80vw;
   margin: 0;
   padding: 25px 40px;
 }
 
 .password-display {
   display: flex;
-  gap: 10px;
   width: 85%;
   height: 45%;
-
   margin-top: -20px;
   color: white;
   align-items: center;
@@ -84,3 +83,31 @@
   justify-content: center;
   gap: 5px;
 }
+
+@media only screen and (max-width: 400px) {
+  .pass-card {
+    width: 100vw;
+  }
+  /* .password {
+    font-size: 0.2rem !important;
+  } */
+  .pass-options {
+    width: 95vw;
+  }
+  .icons {
+    font-size: 1.7rem !important;
+    margin: 0 !important;
+  }
+}
+.main-content__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* @media (min-width: 1200px) {
+  .main-content {
+    max-width: 1200px;
+    border: solid;
+  }
+} */

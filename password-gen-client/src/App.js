@@ -13,26 +13,32 @@ import Login from "./auth/Login";
 import ProctectedRoute from "./proctected/ProctectedRoute";
 import Auth from "./auth/Auth";
 import AddPasswords from "./vault/AddPasswords";
+import PasswordPage from "./password-page/PasswordPage";
 function App() {
   const { pathname } = useLocation();
 
   return (
-    <div>
-      {pathname !== "/login" && pathname !== "/signUp" && <NavBar />}
-      <Routes>
-        <Route path="/" element={<Navigate to={"/home"} />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/login" element={<Auth />} />
-        <Route path="/signUp" element={<Auth />} />
-        <Route
-          path="/vault"
-          element={
-            <ProctectedRoute>
-              <Vault />
-            </ProctectedRoute>
-          }
-        />
-      </Routes>
+    <div className="app--wrapper">
+      <div className="nav-bar">
+        {pathname !== "/login" && pathname !== "/signUp" && <NavBar />}
+      </div>
+      <div className="app-body">
+        <Routes>
+          <Route path="/" element={<Navigate to={"/home"} />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/login" element={<Auth />} />
+          <Route path="/signUp" element={<Auth />} />
+          <Route path="/access" element={<PasswordPage />} />
+          <Route
+            path="/vault"
+            element={
+              <ProctectedRoute>
+                <Vault />
+              </ProctectedRoute>
+            }
+          />
+        </Routes>
+      </div>
     </div>
   );
 }

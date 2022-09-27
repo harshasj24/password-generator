@@ -1,0 +1,30 @@
+:root {
+  --default: #9fccf5;
+  --strong: #73ba72;
+  --week: #fab650;
+  --bad: #f56551;
+}
+
+.card--wrapper .d-card {
+  width: 200px;
+  height: 70px;
+  padding: 0.75rem;
+}
+.left-content {
+  line-height: 125%;
+}
+.left-content p {
+  font-size: 0.75rem;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.card-content {
+  display: flex;
+  align-items: center;
+}
+.card-content .left-content {
+  flex-grow: 1;
+}
+.card-content .right-content {
+  font-size: 1.75rem;
+}

@@ -1,27 +1,113 @@
 .banner {
   background: url("../assets/Image1.jpeg");
   width: 100%;
-  height: 70vh;
+  height: 100%;
   /* background-position: center; */
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-attachment: fixed;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  /* justify-content: flex-end; */
   letter-spacing: 20px;
 }
 
 .banner > h2 {
   font-family: "Times New Roman", Times, serif;
+  /* margin-left: auto; */
+  text-align: end;
 }
 
 .table {
   width: 90% !important;
   /* border: solid; */
   margin-left: 5%;
-  margin-top: 70px;
+  /* margin-top: 70px; */
 }
-.main {
-  background-color: #eeeff0;
-  padding-bottom: 20px;
+.vault--wrapper {
+  padding: 15px;
+  min-height: 100%;
+}
+.but {
+  display: flex;
+  align-self: center;
+  margin-top: 27% !important;
+  color: white !important;
+  border: solid white !important;
+}
+.vault-cards-section {
+  display: flex;
+  justify-content: space-between;
+}
+.css-1ex1afd-MuiTableCell-root {
+  padding: 8px !important;
+}
+.vault-header {
+  display: flex;
+}
+.vault-header h3 {
+  flex-grow: 1;
+}
+.vault-cards-section {
+  margin-top: 30px;
+}
+.vault-body__table {
+  height: 410px;
+  /* overflow-y: scroll; */
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(184, 184, 184);
+  border-radius: 4px;
+}
+
+.vault-modal--wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  outline: none !important;
+}
+.vault-modal {
+  background-color: #ffff;
+  width: 40vw;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+}
+.vault-modal__header,
+.vault-modal__body,
+.vault-modal__footer {
+  padding: 10px;
+}
+.vault-modal__header {
+  border-bottom: 1px solid lightgray;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+.vault-modal__body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.vault-modal__footer {
+  border-top: 1px solid lightgray;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer_btn {
+  text-transform: capitalize !important;
+}
+.body__actions {
+  gap: 20px;
+}
+.text-field {
+  /* margin-left: 82px; */
 }

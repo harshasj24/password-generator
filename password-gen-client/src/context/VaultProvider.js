@@ -8,14 +8,16 @@ import React, {
 } from "react";
 import { useAuth } from "../context/AuthProvider";
 const vaultContex = createContext();
-
 export const VaultProvider = ({ children }) => {
   const [passwords, setPasswords] = useState([]);
   const { user } = useAuth();
   const [updatePass, setUpdatePass] = useState({
+    action: null,
     isUpdating: false,
     _id: null,
+    pName: "",
   });
+  const [slectedId, setSelectedId] = useState(null);
   useEffect(() => {
     console.log(user, "effect");
   }, [user]);
@@ -38,6 +40,7 @@ export const VaultProvider = ({ children }) => {
         _id: repsonce.data.data._id,
         date: repsonce.data.data.date,
         password: repsonce.data.data.cipherText,
+        status: repsonce.data.data.status,
       };
 
       setPasswords([...passwords, newPassword]);
@@ -45,20 +48,27 @@ export const VaultProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const isUpdating = ({ isUpdating, _id }) => {
+  const isUpdating = (details) => {
     setUpdatePass({
       ...updatePass,
-      isUpdating: isUpdating,
-      _id: _id,
+      ...details,
     });
   };
-
-  const updatePassword = async (password) => {
+  const resetUpdating = () => {
+    setUpdatePass({
+      ...updatePass,
+      isUpdating: false,
+      _id: null,
+    });
+  };
+  const updatePassword = async (passwordDetails) => {
+    const { password, pName } = passwordDetails;
     const reqData = {
       password,
       _id: updatePass._id,
+      pName,
     };
-    const responece = await axios.post(
+    const responece = await axios.put(
       "http://localhost:4500/vault/updatePassword",
       reqData,
       {
@@ -76,6 +86,8 @@ export const VaultProvider = ({ children }) => {
       ...newPasswords[index],
       password: responece.data.data.cipherText,
       date: responece.data.data.date,
+      status: responece.data.data.status,
+      pName,
     };
 
     setPasswords([...newPasswords]);
@@ -100,7 +112,52 @@ export const VaultProvider = ({ children }) => {
       setPasswords([]);
     }
   };
+  // validatePassword
+  const checkPassword = async (data) => {
+    try {
+      const responce = await axios.post(
+        "http://localhost:4500/users/validatePassword",
+        data
+      );
+      return responce;
+    } catch (error) {
+      return false;
+    }
+  };
 
+  const deletePassword = async () => {
+    try {
+      const responce = await axios.delete(
+        `http://localhost:4500/vault/delete/${updatePass._id}`,
+        {
+          headers: headers,
+        }
+      );
+      const newPasswords = [...passwords].filter(
+        (val) => val._id !== updatePass._id
+      );
+      setPasswords(newPasswords);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loopElements = (range, element) => {
+    for (let i = 0; i < range; i++) {
+      console.log(i, range, "vault");
+      return element;
+    }
+  };
+
+  const getOnePassword = async (_id) => {
+    const responce = await axios.get(
+      `http://localhost:4500/vault/getPassword/${_id}`,
+      {
+        headers: headers,
+      }
+    );
+    return responce;
+  };
   const values = useMemo(() => {
     return {
       passwords,
@@ -111,8 +168,16 @@ export const VaultProvider = ({ children }) => {
       isUpdating,
       updatePassword,
       headers,
+      resetUpdating,
+      checkPassword,
+      slectedId,
+      setSelectedId,
+      deletePassword,
+      pName: updatePass.pName,
+      loopElements,
+      getOnePassword,
     };
-  }, [passwords, updatePass, user]);
+  }, [passwords, updatePass, user, slectedId]);
 
   return <vaultContex.Provider value={values}>{children}</vaultContex.Provider>;
 };

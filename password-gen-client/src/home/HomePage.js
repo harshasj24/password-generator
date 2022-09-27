@@ -37,7 +37,7 @@ const HomePage = () => {
   // context
   const { sliderVal, password, setPassword } = usePassword();
   const { user } = useAuth();
-  const { updatePass, updatePassword, isUpdating } = useVault();
+  const { updatePass, updatePassword, isUpdating, resetUpdating } = useVault();
   // hookes
   const navigate = useNavigate();
   // sates
@@ -142,6 +142,7 @@ const HomePage = () => {
   // model state
   const handelClose = () => {
     setOpen(false);
+    updatePass.isUpdating && resetUpdating();
   };
   const handelOpen = () => {
     if (user) {
@@ -153,15 +154,21 @@ const HomePage = () => {
 
   // updating the password
   const handelUpdate = () => {
-    if (window.confirm("Do you want to change the password")) {
-      updatePassword(password);
-      navigate("/vault");
-    } else {
-      isUpdating({ isUpdating: false, _id: null });
-    }
+    setOpen(true);
+    // if (window.confirm("Do you want to change the password")) {
+    //   updatePassword(password);
+    //   resetUpdating();
+    //   navigate("/vault");
+    // } else {
+    //   resetUpdating();
+    // }
   };
   return (
     <div className="main-content">
+      {/* <Card
+        className="main-content__card"
+        sx={{ width: "90vw", padding: "20px" }}
+      > */}
       <Card
         style={{
           backgroundColor: `var(${setBasedOnSlider(
@@ -169,11 +176,12 @@ const HomePage = () => {
             "--strongPass",
             "--badPass"
           )})`,
+          borderRadius: "10px",
         }}
         elevation={1}
         className="pass-card"
       >
-        <div className="password-display ">
+        <div className="password-display">
           <div
             style={{
               fontSize: `calc(3rem - calc(${sliderVal}px / 2))`,
@@ -186,6 +194,7 @@ const HomePage = () => {
             data-testid="refresh"
             onClick={handleRefreshButton}
             className=" ml-auto"
+            size="small"
           >
             <AutorenewIcon
               style={{ transform: `rotate(${rotate}deg)` }}
@@ -203,7 +212,7 @@ const HomePage = () => {
               Change
             </Button>
           ) : (
-            <div className="password-icons ">
+            <div className="password-icons">
               <Tooltip placement="top" title={toolTipTitle}>
                 <IconButton
                   data-testid="copy"
@@ -229,7 +238,7 @@ const HomePage = () => {
           {setBasedOnSlider("Week", "Strong", "Bad") + " password"}
         </div>
       </Card>
-      <Card className="pass-options">
+      <Card sx={{ borderRadius: "10px" }} className="pass-options">
         <p>Use the slider below to set the length of your password</p>
         <p>Password Length [4-50]</p>
         <div className="slider">
@@ -263,6 +272,7 @@ const HomePage = () => {
           })}
         </div>
       </Card>
+
       {/* add pasword model */}
       <Modal data-testid="modal" open={open}>
         <div className="add-password w-50 bg-light mx-auto p-4">
@@ -275,7 +285,9 @@ const HomePage = () => {
               <CloseIcon />
             </IconButton>
           </div>
-          <h4 className="mb-3">Save your password</h4>
+          <h4 className="mb-3">
+            {updatePass.isUpdating ? "Update" : "Save"} your password
+          </h4>
           <AddPasswords closeModel={setOpen} />
         </div>
       </Modal>

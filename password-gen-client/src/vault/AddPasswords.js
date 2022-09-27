@@ -17,7 +17,8 @@ import * as yup from "yup";
 import { useVault } from "../context/VaultProvider";
 import { useNavigate } from "react-router-dom";
 const AddPasswords = ({ closeModel }) => {
-  const { savePassword } = useVault();
+  const { savePassword, pName, updatePass, updatePassword, resetUpdating } =
+    useVault();
   const { password } = usePassword();
   const handleClose = () => {};
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const AddPasswords = ({ closeModel }) => {
 
   const initialValues = {
     password: "",
-    pName: "",
+    pName: pName || "",
   };
 
   const validationSchema = yup.object({
@@ -42,10 +43,16 @@ const AddPasswords = ({ closeModel }) => {
   });
 
   const handleSubmit = (values) => {
-    closeModel(false);
-    savePassword(values);
-    navigate("/vault");
-    console.log(values);
+    if (updatePass.isUpdating) {
+      updatePassword(values);
+      navigate("/vault");
+      resetUpdating();
+    } else {
+      closeModel(false);
+      savePassword(values);
+      navigate("/vault");
+      console.log(values);
+    }
   };
 
   const setValue = (field, setFeldVal, password) => {
@@ -58,6 +65,7 @@ const AddPasswords = ({ closeModel }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {({ setFieldValue }) => {
         return (
@@ -76,6 +84,8 @@ const AddPasswords = ({ closeModel }) => {
                 variant="outlined"
                 label="Name"
                 name="pName"
+                // value={pName || ""}
+                defaultValue={pName || ""}
                 className="w-100"
               />
               <ErrorMessage name="pName">
@@ -90,7 +100,7 @@ const AddPasswords = ({ closeModel }) => {
               color="secondary"
               variant="contained"
             >
-              Add
+              {updatePass.isUpdating ? "Update" : "Add"}
             </Button>
           </Form>
         );

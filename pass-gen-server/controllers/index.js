@@ -80,6 +80,7 @@ const login = async (req, res, next) => {
         const responceData = {
           fName,
           lName,
+          email,
           id: finduser._id,
           token,
         };
@@ -113,6 +114,7 @@ const savePasswords = async (req, res, next) => {
   try {
     const objectId = new mongoose.Types.ObjectId();
     const addedDate = new Date();
+    let status;
     await vaultSchema.insertMany([
       {
         userId: _id,
@@ -120,6 +122,7 @@ const savePasswords = async (req, res, next) => {
         password: cipherText,
         _id: objectId,
         date: addedDate,
+        status: password.length,
       },
     ]);
     res.status(200).json({
@@ -129,6 +132,7 @@ const savePasswords = async (req, res, next) => {
         _id: objectId,
         date: addedDate,
         cipherText: cipherText,
+        status: password.length,
       },
     });
   } catch (error) {
@@ -150,25 +154,36 @@ const getUserPasswords = async (req, res, next) => {
   } catch (error) {
     res.status(404).json({
       error: true,
-      message: "Invalid",
+      message: "Invalid!",
     });
   }
 };
 
 const updatePassword = async (req, res, next) => {
-  const { _id, password } = req.body;
+  const { _id, password, pName } = req.body;
   console.log(password);
   const updatedDate = new Date();
   try {
     const cipherText = encrypt(password).toString();
     console.log(cipherText);
-    await vaultSchema.updateOne({ _id }, { $set: { password: cipherText } });
+    await vaultSchema.updateOne(
+      { _id },
+      {
+        $set: {
+          password: cipherText,
+          date: updatedDate,
+          status: password.length,
+          pName: pName,
+        },
+      }
+    );
     res.status(200).json({
       error: false,
       message: "updated successfully",
       data: {
         cipherText,
         date: updatedDate,
+        status: password.length,
       },
     });
   } catch (error) {
@@ -206,6 +221,45 @@ const getPassword = async (req, res, next) => {
   }
 };
 
+const validateUserPassword = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const userPassword = await usersSchema.findOne({ email }).lean();
+    if (userPassword) {
+      console.log(password, userPassword.password);
+      const passmatch = await bcrypt.compare(password, userPassword.password);
+      if (passmatch) {
+        res.status(200).json({
+          message: "Password Validated Sucessfully",
+        });
+      } else {
+        res.status(401).json({
+          message: "Incorrect password",
+        });
+      }
+    } else {
+      res.status(401).json({
+        message: "User Not Found",
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteOnePassword = async (req, res, next) => {
+  const _id = req.params._id;
+  try {
+    console.log(_id);
+    await vaultSchema.deleteOne({ _id });
+    res.status(200).json({
+      message: "Deleted Sucessfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   signUp,
   login,
@@ -214,4 +268,6 @@ module.exports = {
   getUserPasswords,
   updatePassword,
   getPassword,
+  validateUserPassword,
+  deleteOnePassword,
 };

@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
+import CryptoJS from "crypto-js";
 
+const encrypt = (data) => {
+  const cyphertext = CryptoJS.AES.encrypt(JSON.stringify(data)).toString();
+  return cyphertext;
+};
+const decrypt = (cyphertext) => {
+  const bytes = CryptoJS.AES.decrypt(cyphertext);
+  const originalData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  return originalData;
+};
 export const useLocalStorage = (key, defaultValue) => {
   const [value, setValue] = useState(() => {
     try {

@@ -1,6 +1,6 @@
 .auth {
   overflow: hidden;
-  height: calc(100vh);
+  /* height: calc(100vh); */
 }
 .auth__images {
   height: 100vh;
@@ -20,7 +20,12 @@
   color: white;
   /* justify-content: center; */
 }
-
+.auth__images--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: column;
+}
 .auth__images__logo {
   margin-top: 20%;
 }
