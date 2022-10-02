@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const authorizeToken = (req, res, next) => {
   if (!req.headers["authorization"]) {
-    return res.status(401).json({
+    return res.status(404).json({
       error: true,
       message: "Authorization Token Required",
       data: null,

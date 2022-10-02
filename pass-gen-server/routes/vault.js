@@ -8,7 +8,7 @@ const {
 const express = require("express");
 const { authorizeToken } = require("../auth/auth");
 const router = express.Router();
-
+// vault
 router.get("/password/:_id", authorizeToken, getUserPasswords);
 router.get("/getPassword/:_id", authorizeToken, getPassword);
 router.post("/savePasswords", authorizeToken, savePasswords);

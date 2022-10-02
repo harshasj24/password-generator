@@ -12,14 +12,15 @@ import LoginIcon from "@mui/icons-material/Login";
 import LockIcon from "@mui/icons-material/Lock";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../context/AuthProvider";
-import { LinearProgress, Tooltip } from "@mui/material";
+import { Divider, LinearProgress, Tooltip } from "@mui/material";
 import { useVault } from "../context/VaultProvider";
 import { usePassword } from "../context/ContextProvider";
 import HomeIcon from "@mui/icons-material/Home";
+import { Add, AddCircleOutline, AddOutlined } from "@mui/icons-material";
 const NavBar = () => {
   const { logout, user } = useAuth();
   const { pathname } = useLocation();
-  const { setPasswords } = useVault();
+  const { setPasswords, modalDetails, handleModalDetails } = useVault();
   const { isLoading } = usePassword();
   console.log(pathname);
 
@@ -106,6 +107,20 @@ const NavBar = () => {
             </IconButton>
           </Link>
         </Tooltip>
+      )}
+      {pathname == "/vault" && (
+        <div className="add">
+          <Divider />
+          <IconButton
+            onClick={() => {
+              handleModalDetails({ open: true, type: "add" });
+            }}
+            className=""
+            color="inherit"
+          >
+            <AddCircleOutline color="inherit" />
+          </IconButton>
+        </div>
       )}
     </header>
   );

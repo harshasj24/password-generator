@@ -17,6 +17,23 @@ export const VaultProvider = ({ children }) => {
     _id: null,
     pName: "",
   });
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+  });
+  const [modalDetails, setModalDetails] = useState({
+    open: false,
+    _id: null,
+    type: "",
+  });
+
+  const handleModalDetails = (details) => {
+    setModalDetails({ ...modalDetails, ...details });
+  };
+
+  const handleSnackbar = (open, message) => {
+    setSnackbar({ ...snackbar, open: open, message: message });
+  };
   const [slectedId, setSelectedId] = useState(null);
   useEffect(() => {
     console.log(user, "effect");
@@ -137,6 +154,7 @@ export const VaultProvider = ({ children }) => {
         (val) => val._id !== updatePass._id
       );
       setPasswords(newPasswords);
+      handleSnackbar(true, "Password Deleted Sucessfully");
     } catch (error) {
       console.log(error);
     }
@@ -176,8 +194,20 @@ export const VaultProvider = ({ children }) => {
       pName: updatePass.pName,
       loopElements,
       getOnePassword,
+      snackbar,
+      handleSnackbar,
+      modalDetails,
+      handleModalDetails,
     };
-  }, [passwords, updatePass, user, slectedId]);
+  }, [
+    passwords,
+    updatePass,
+    user,
+    slectedId,
+    snackbar.open,
+    modalDetails,
+    handleSnackbar,
+  ]);
 
   return <vaultContex.Provider value={values}>{children}</vaultContex.Provider>;
 };

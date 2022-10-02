@@ -18,8 +18,10 @@ import {
   InputAdornment,
   FormControl,
   InputLabel,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import * as yup from "yup";
 import SwipeableEdgeDrawer from "./SwipeableEdgeDrawer";
 import VaultCard from "./VaultCard";
@@ -30,38 +32,61 @@ import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import AddPasswords from "./AddPasswords";
+import { useNavigate } from "react-router-dom";
+
 const Vault = () => {
   const {
     passwords,
     updatePass,
-    updatePassword,
     getAllPasswords,
-    loopElements,
     checkPassword,
     getOnePassword,
+    snackbar,
+    handleSnackbar,
+    modalDetails,
+    handleModalDetails,
+    savePassword,
   } = useVault();
   const { password, copyToClipBoard } = usePassword();
+  const navigate = useNavigate();
   const isLoading = useRef(true);
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
-  const validationSchema = yup.object({
-    password: yup.string().required("please provide password"),
-  });
 
   const [search, setSearch] = useState("");
   const [confirmAccess, setConfirmAccess] = useState(false);
   const [grantedAccess, setGrantedAccess] = useState(false);
   const [loginPassword, setLoginPassword] = useState("");
-  const [modalDetails, setModalDetails] = useState({
-    open: false,
-    _id: null,
-  });
+  // const [modalDetails, setModalDetails] = useState({
+  //   open: false,
+  //   _id: null,
+  //   type: "",
+  // });
   const [vaultPassword, setVaultPassword] = useState({
     open: null,
     password: "",
   });
 
   const [typePassword, setTypePassword] = useState(true);
+  const initialValues = {
+    password: "",
+    pName: "",
+  };
+
+  const validationSchema = yup.object({
+    pName: yup.string().required("*Please provide a name for your password"),
+    password: yup.string().required("password is required"),
+  });
+  const handelChange = (field, setFieldValues) => (e) => {
+    setFieldValues(field, e.target.value);
+    console.log(e.target.value);
+  };
+  const handleSubmit = (values) => {
+    savePassword(values);
+    handleClose();
+    handleSnackbar(true, "Password Added Sucessfully");
+  };
 
   const handleViewCopy = (type) => async () => {
     if (grantedAccess && !vaultPassword.password) {
@@ -96,23 +121,23 @@ const Vault = () => {
     }
   };
 
-  const handelSubmit = (values) => {};
   useEffect(() => {
     if (isLoading.current) {
       isLoading.current = false;
       getAllPasswords();
     }
-  }, []);
+  }, [snackbar]);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleModalOpen = (_id) => () => {
-    setModalDetails({ ...modalDetails, open: true, _id });
+    handleModalDetails({ ...modalDetails, open: true, _id, type: "view" });
   };
   const handleClose = () => {
-    setModalDetails({
+    handleModalDetails({
       ...modalDetails,
       open: false,
+      type: "",
     });
     setVaultPassword({ open: false, password: "" });
     setGrantedAccess(false);
@@ -177,6 +202,13 @@ const Vault = () => {
       color: "#f56551",
     },
   ];
+  const action = (
+    <React.Fragment>
+      <IconButton size="small" aria-label="close" color="inherit">
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
   return (
     <div className="vault--wrapper">
       <div className="container">
@@ -244,80 +276,53 @@ const Vault = () => {
 
       <Modal open={modalDetails.open}>
         <div className="vault-modal--wrapper">
-          <div className="vault-modal">
-            {/* <div className="form d-flex align-items-center bg-light h-50 p-5 w-50 mx-auto justify-content-center flex-column">
-            <h5 className="mb-5">
-              Your password is encrypted!
-              <br /> please provide your login password to procede
-            </h5>
-            <Formik
-              initialValues={{ password: "" }}
-              validationSchema={validationSchema}
-              onSubmit={handelSubmit}
-            >
-              {({ setFieldValue }) => {
-                return (
-                  <Form className="w-100">
-                    <TextField
-                      className="w-100"
-                      label="password"
-                      onChange={(e) => {
-                        setFieldValue("password", e.target.value);
-                      }}
-                      variant="outlined"
-                    />
-                    <Button className="my-3 d-flex ml-auto" variant="contained">
-                      Get password
-                    </Button>
-                  </Form>
-                );
-              }}
-            </Formik>
-          </div> */}
-
-            <div className="vault-modal__header">Password Options</div>
-            <div className="vault-modal__body">
-              <div className="body__icons d-flex">
-                {!confirmAccess ? (
-                  <div>
-                    {grantedAccess ? (
-                      <LockOpen color="success" sx={{ fontSize: "3rem" }} />
-                    ) : (
-                      <LockOutlined color="error" sx={{ fontSize: "3rem" }} />
-                    )}
-                  </div>
-                ) : (
-                  <div className="container-layout__column">
-                    <p className="text-center">Please confirm your password</p>
-                    <div className="text-field container-layout__row ">
-                      <TextField
-                        variant="outlined"
-                        size="small"
-                        label=" "
-                        placeholder="password"
-                        type={"password"}
-                        onChange={handleChange("login password")}
-                        InputLabelProps={{ shrink: false }}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment>
-                              <div>
-                                <IconButton onClick={handleDone}>
-                                  <DoneIcon />
-                                </IconButton>
-                                <IconButton
-                                  onClick={() => {
-                                    setConfirmAccess(false);
-                                  }}
-                                >
-                                  <CloseIcon />
-                                </IconButton>
-                              </div>
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                      {/* <IconButton onClick={handleDone}>
+          {modalDetails.type === "view" && (
+            <div className="vault-modal">
+              <div className="vault-modal__header">Password Options</div>
+              <div className="vault-modal__body">
+                <div className="body__icons d-flex">
+                  {!confirmAccess ? (
+                    <div>
+                      {grantedAccess ? (
+                        <LockOpen color="success" sx={{ fontSize: "3rem" }} />
+                      ) : (
+                        <LockOutlined color="error" sx={{ fontSize: "3rem" }} />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="container-layout__column">
+                      <p className="text-center">
+                        Please confirm your password
+                      </p>
+                      <div className="text-field container-layout__row ">
+                        <TextField
+                          variant="outlined"
+                          size="small"
+                          label=" "
+                          placeholder="password"
+                          type={"password"}
+                          onChange={handleChange("login password")}
+                          InputLabelProps={{ shrink: false }}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment>
+                                <div>
+                                  <IconButton onClick={handleDone}>
+                                    <DoneIcon />
+                                  </IconButton>
+                                  <IconButton
+                                    onClick={() => {
+                                      setConfirmAccess(false);
+                                    }}
+                                  >
+                                    <CloseIcon />
+                                  </IconButton>
+                                </div>
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                        {/* <IconButton onClick={handleDone}>
                         <DoneIcon />
                       </IconButton>
                       <IconButton
@@ -327,71 +332,153 @@ const Vault = () => {
                       >
                         <CloseIcon />
                       </IconButton> */}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-              <div className="body__actions d-flex flex-column ">
-                {vaultPassword.open ? (
-                  <div>
-                    <TextField
-                      value={vaultPassword.password}
-                      type={typePassword ? "password" : "text"}
+                  )}
+                </div>
+                <div className="body__actions d-flex flex-column ">
+                  {vaultPassword.open ? (
+                    <div>
+                      <TextField
+                        type={typePassword ? "password" : "text"}
+                        size="small"
+                        disabled
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment>
+                              <IconButton
+                                onClick={() => {
+                                  setTypePassword(!typePassword);
+                                }}
+                              >
+                                {typePassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                        InputLabelProps={{ shrink: false }}
+                        label=" "
+                      />
+                    </div>
+                  ) : (
+                    <Button
+                      onClick={handleViewCopy("view")}
                       size="small"
-                      disabled
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment>
-                            <IconButton
-                              onClick={() => {
-                                setTypePassword(!typePassword);
-                              }}
-                            >
-                              {typePassword ? (
-                                <Visibility />
-                              ) : (
-                                <VisibilityOff />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      InputLabelProps={{ shrink: false }}
-                      label=" "
-                    />
-                  </div>
-                ) : (
+                      variant="contained"
+                    >
+                      View Password
+                    </Button>
+                  )}
                   <Button
-                    onClick={handleViewCopy("view")}
+                    onClick={handleViewCopy("copy")}
                     size="small"
                     variant="contained"
+                    color="success"
                   >
-                    View Password
+                    Copy Password
                   </Button>
-                )}
+                </div>
+              </div>
+              <div className="vault-modal__footer">
                 <Button
-                  onClick={handleViewCopy("copy")}
+                  onClick={handleClose}
+                  className="footer_btn"
                   size="small"
                   variant="contained"
-                  color="success"
                 >
-                  Copy Password
+                  Close
                 </Button>
               </div>
             </div>
-            <div className="vault-modal__footer">
-              <Button
-                onClick={handleClose}
-                className="footer_btn"
-                size="small"
-                variant="contained"
-              >
-                Close
-              </Button>
+          )}
+          {modalDetails.type === "add" && (
+            <div className="add__modal bg-light">
+              <div className="add-modal__header">
+                <p>Add Your Custom Password</p>
+                <IconButton onClick={handleClose}>
+                  <CloseIcon />
+                </IconButton>
+              </div>
+              <div className="add-modal__body">
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={handleSubmit}
+                  enableReinitialize
+                >
+                  {({ setFieldValue }) => {
+                    return (
+                      <Form>
+                        <div className="form__body">
+                          <TextField
+                            className=" my-3"
+                            variant="outlined"
+                            label="password"
+                            name="password"
+                            onChange={handelChange("password", setFieldValue)}
+                            fullWidth
+                          />
+                          <ErrorMessage name="password">
+                            {(msg) => {
+                              return <p className="text-danger">{msg}</p>;
+                            }}
+                          </ErrorMessage>
+
+                          <div className="pass-names my-3">
+                            <TextField
+                              onChange={handelChange("pName", setFieldValue)}
+                              variant="outlined"
+                              label="Name"
+                              name="pName"
+                              className="w-100"
+                              fullWidth
+                            />
+                            <ErrorMessage name="pName">
+                              {(msg) => {
+                                return <p className="text-danger">{msg}</p>;
+                              }}
+                            </ErrorMessage>
+                          </div>
+                        </div>
+                        <div className="vault-modal__footer">
+                          <Button
+                            type="submit"
+                            className="d-flex ml-auto"
+                            color="secondary"
+                            variant="contained"
+                          >
+                            add
+                          </Button>
+                        </div>
+                      </Form>
+                    );
+                  }}
+                </Formik>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </Modal>
+
+      <Snackbar
+        autoHideDuration={6000}
+        open={snackbar.open}
+        onClose={() => {
+          handleSnackbar(false, "");
+        }}
+        anchorOrigin={{
+          horizontal: "center",
+          vertical: "top",
+        }}
+      >
+        <Alert action={action} severity="success">
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

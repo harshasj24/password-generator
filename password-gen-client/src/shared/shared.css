@@ -20,10 +20,15 @@ header {
   align-items: center;
   border-radius: 7px;
   gap: 10px;
+  position: relative;
 }
 .active {
   color: #007bff !important;
   font-size: large;
   border-bottom: solid #007bff;
   padding-bottom: 5px;
+}
+.add {
+  position: absolute;
+  bottom: 10px;
 }

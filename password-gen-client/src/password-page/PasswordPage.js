@@ -15,7 +15,14 @@ const vlaidationSchema = Yup.object({
 const PasswordPage = () => {
   const { user } = useAuth();
   const { setisloading } = usePassword();
-  const { updatePass, isUpdating, checkPassword, deletePassword } = useVault();
+  const {
+    updatePass,
+    isUpdating,
+    checkPassword,
+    deletePassword,
+    snackbar,
+    handleSnackbar,
+  } = useVault();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const formik = useFormik({

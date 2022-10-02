@@ -86,7 +86,7 @@
 .vault-modal__header {
   border-bottom: 1px solid lightgray;
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 .vault-modal__body {
   flex-grow: 1;
@@ -110,4 +110,23 @@
 }
 .text-field {
   /* margin-left: 82px; */
+}
+.add__modal {
+  width: 420px;
+  min-height: 52vh;
+}
+.form__body {
+  padding: 12px;
+}
+.add-modal__header {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
+  align-items: center;
+}
+.add-modal__header > p {
+  flex-grow: 1;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
 }

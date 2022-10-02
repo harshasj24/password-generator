@@ -6,7 +6,7 @@ const {
   setvaultPassword,
   validateUserPassword,
 } = require("../controllers");
-
+// /users
 router.post("/signUp", signUp);
 router.post("/login", login);
 router.post("/validatePassword", validateUserPassword);

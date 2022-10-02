@@ -24,7 +24,6 @@ const AddPasswords = ({ closeModel }) => {
   const navigate = useNavigate();
 
   const handelChange = (field, setFieldValues) => (e) => {
-    setFieldValues("password", password);
     setFieldValues(field, e.target.value);
   };
 
@@ -33,7 +32,7 @@ const AddPasswords = ({ closeModel }) => {
   };
 
   const initialValues = {
-    password: "",
+    password: password || "",
     pName: pName || "",
   };
 
@@ -65,15 +64,15 @@ const AddPasswords = ({ closeModel }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
-      enableReinitialize
+      enableReinitialize={true}
     >
-      {({ setFieldValue }) => {
+      {({ setFieldValue, values }) => {
         return (
           <Form>
             <TextField
               className="w-100 my-3"
               disabled
-              value={password}
+              value={values.password}
               variant="outlined"
               label={"password"}
             />
@@ -84,8 +83,7 @@ const AddPasswords = ({ closeModel }) => {
                 variant="outlined"
                 label="Name"
                 name="pName"
-                // value={pName || ""}
-                defaultValue={pName || ""}
+                value={values.pName}
                 className="w-100"
               />
               <ErrorMessage name="pName">
