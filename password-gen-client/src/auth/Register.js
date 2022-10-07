@@ -179,8 +179,8 @@ const Register = () => {
               </FormControl>
               <TextField
                 size="small"
-                name={"email"}
-                label="Confirm password"
+                name={"confirm password"}
+                label="confirmPassword"
                 variant="outlined"
                 className="w-100"
                 onChange={(e) => {
