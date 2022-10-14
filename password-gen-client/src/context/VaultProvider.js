@@ -109,6 +109,7 @@ export const VaultProvider = ({ children }) => {
     };
 
     setPasswords([...newPasswords]);
+    handleSnackbar(true, "Password Updated Sucessfully");
   };
 
   const getAllPasswords = async () => {
