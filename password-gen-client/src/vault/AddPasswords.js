@@ -45,13 +45,13 @@ const AddPasswords = ({ closeModel }) => {
     if (updatePass.isUpdating) {
       updatePassword(values);
       navigate("/vault");
-      resetUpdating();
     } else {
       closeModel(false);
       savePassword(values);
       navigate("/vault");
       console.log(values);
     }
+    resetUpdating();
   };
 
   const setValue = (field, setFeldVal, password) => {

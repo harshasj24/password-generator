@@ -155,7 +155,6 @@ const Vault = () => {
       setGrantedAccess(true);
     } else {
       setConfirmAccess(true);
-      alert("sede");
     }
   };
 
@@ -343,6 +342,7 @@ const Vault = () => {
                         type={typePassword ? "password" : "text"}
                         size="small"
                         disabled
+                        value={vaultPassword.password}
                         InputProps={{
                           endAdornment: (
                             <InputAdornment>

@@ -76,6 +76,7 @@ export const VaultProvider = ({ children }) => {
       ...updatePass,
       isUpdating: false,
       _id: null,
+      pName: "",
     });
   };
   const updatePassword = async (passwordDetails) => {
