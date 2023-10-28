@@ -92,6 +92,12 @@
 .container__row--flex-end--flex-start > * {
   flex: 0 1 auto;
 }
+.container__column--center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .container__column--space-between--center {
   display: flex;
   flex-direction: column;
@@ -158,8 +164,8 @@
 .container--backgound-white {
   background-color: white;
 }
-.container--roundedBorder{
-  border-radius: 0  0.5rem 0.5rem 0.5rem;
+.container--roundedBorder {
+  border-radius: 0 0.5rem 0.5rem 0.5rem;
 }
 .rotate-90-negetive {
   transform: rotate(-90deg);

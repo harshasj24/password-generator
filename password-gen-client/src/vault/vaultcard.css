@@ -28,3 +28,22 @@
 .card-content .right-content {
   font-size: 1.75rem;
 }
+.vault-modal {
+  position: relative;
+}
+.alert {
+  position: absolute !important;
+  top: 0px;
+  width: 100%;
+  z-index: 0;
+  transform: translateY(0);
+  transition: all 0.5s ease-in-out !important;
+}
+.vault-modal__header {
+  z-index: 100;
+  background-color: #ffffff;
+}
+.alert.active-alert {
+  transform: translateY(45px);
+  transition: all 0.5s ease-in-out;
+}

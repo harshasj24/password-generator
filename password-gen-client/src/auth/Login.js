@@ -24,7 +24,7 @@ import "./login.css";
 import { useVault } from "../context/VaultProvider";
 const Login = () => {
   const { login } = useAuth();
-  
+
   const location = useLocation();
   const [inValid, setInvalid] = useState(false);
   const [values, setValues] = useState({
@@ -101,7 +101,7 @@ const Login = () => {
       >
         {({ setFieldValue, validateField }) => {
           return (
-            <Form className=" mx-auto mt-4">
+            <Form data-testid="loginform" className=" mx-auto mt-4">
               {inValid && (
                 <Alert severity="error" className="mb-4">
                   Invalid Email or Password.
@@ -159,6 +159,7 @@ const Login = () => {
 
               <Button
                 color="success"
+                data-testid="formSubmit"
                 className=" d-flex ml-auto "
                 variant="contained"
                 type="submit"

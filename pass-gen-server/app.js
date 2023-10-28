@@ -4,11 +4,12 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const userRouter = require("./routes/users");
 const vaultRouter = require("./routes/vault");
-
+const { responce } = require("./constants/responce");
 require("dotenv").config();
 
 // db connection
 require("./db/db").dbConnection;
+app.use(responce);
 
 // middlewares
 // cors policy
@@ -22,4 +23,7 @@ app.use(express.json());
 app.use("/users", userRouter);
 app.use("/vault", vaultRouter);
 
+app.get("/check", (req, res, next) => {
+  return res.Ok("hii hello");
+});
 module.exports = app;

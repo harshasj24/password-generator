@@ -5,78 +5,58 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Crypto = require("crypto-js");
 require("dotenv").config();
+const { makePassword, comparePassword } = require("../auth/hasers");
+const { createToken, verifyToken } = require("../auth/jwt");
+const { todayDate } = require("../constants/constants");
+const { encrypt, decrypt } = require("../auth/crypto");
+const User = require("../db/user.mongo");
+const Vault = require("../db/vault.mongo");
 
-// const hashPaaword = async (password) => {
-//   const salt = await bcrypt.genSalt(12);
-//   return await bcrypt.hash(password, salt);
-// };
-
-const encrypt = (string) => {
-  const cipherText = Crypto.AES.encrypt(string, process.env.SCREACT_KEY);
-  return cipherText;
-};
-const decrypt = (string) => {
-  const bytes = Crypto.AES.decrypt(string, process.env.SCREACT_KEY);
-  const originalData = bytes.toString(Crypto.enc.Utf8);
-  return originalData;
-};
-
+// ------------------------user logic starts------------------------------------------
+// user/signup
 const signUp = async (req, res, next) => {
   let { fName, lName, email, password } = req.body;
   try {
-    const emailExists = await usersSchema.findOne({ email });
-    if (emailExists) {
-      res.status(401).json({
-        error: true,
-        message: "Email already exists",
-        data: null,
-      });
+    const currentUser = await User.find({ email });
+    if (currentUser) {
+      res.forbidden("Email already exists");
     } else {
-      let saltRounds = 10;
-      let salt = await bcrypt.genSalt(saltRounds);
-      let hashPassword = await bcrypt.hash(password, salt);
+      let hashPassword = await makePassword(password);
       let userId = mongoose.Types.ObjectId();
-      await usersSchema.insertMany([
-        {
-          _id: userId,
-          email,
-          fName,
-          lName,
-          password: hashPassword,
-        },
-      ]);
-      res.status(200).json({
-        error: false,
-        message: "Registerd sucessfully",
-        data: null,
+      const newUser = await User.create({
+        _id: userId,
+        email,
+        fName,
+        lName,
+        password: hashPassword,
       });
+      if (newUser) {
+        res.ok("Registerd sucessfully");
+      }
     }
   } catch (error) {
     next(error);
   }
 };
 
+// user/Login
 const login = async (req, res, next) => {
   let { email, password } = req.body;
   try {
-    const finduser = await usersSchema.findOne({ email });
+    const finduser = await User.find({ email });
     if (finduser) {
       const { fName, lName, email } = finduser;
-      const validatePassword = await bcrypt.compare(
+      const validatePassword = await comparePassword(
         password,
         finduser.password
       );
-
       if (validatePassword) {
         const payload = {
           fName,
           lName,
           email,
         };
-
-        const token = jwt.sign(payload, process.env.SCREACT_KEY, {
-          expiresIn: 24 * 60 * 60,
-        });
+        const token = createToken(payload);
         const responceData = {
           fName,
           lName,
@@ -84,30 +64,22 @@ const login = async (req, res, next) => {
           id: finduser._id,
           token,
         };
-        res.status(200).json({
-          error: false,
-          message: "Login Sucessfull",
-          data: responceData,
-        });
+        res.ok("Login Sucessfull", responceData);
       } else {
-        res.status(401).json({
-          error: true,
-          message: "Invalid Password",
-          data: null,
-        });
+        res.forbidden("Invalid Password");
       }
     } else {
-      res.status(404).json({
-        error: true,
-        message: "Not a registred user",
-        data: null,
-      });
+      res.notFound("Not a registred user");
     }
   } catch (error) {
     next(error);
   }
 };
 
+// -----------------vault logic starts-------------------------------------------
+
+// save password to data base
+// /vault/savePasswords
 const savePasswords = async (req, res, next) => {
   const { pName, password, _id } = req.body;
   const cipherText = encrypt(password).toString();
@@ -115,50 +87,38 @@ const savePasswords = async (req, res, next) => {
     const objectId = new mongoose.Types.ObjectId();
     const addedDate = new Date();
     let status;
-    await vaultSchema.insertMany([
-      {
-        userId: _id,
-        pName,
-        password: cipherText,
-        _id: objectId,
-        date: addedDate,
-        status: password.length,
-      },
-    ]);
-    res.status(200).json({
-      error: false,
-      message: "Password Added",
-      data: {
-        _id: objectId,
-        date: addedDate,
-        cipherText: cipherText,
-        status: password.length,
-      },
+    await Vault.create({
+      userId: _id,
+      pName,
+      password: cipherText,
+      _id: objectId,
+      date: addedDate,
+      status: password.length,
+    });
+    res.ok("Password Added", {
+      _id: objectId,
+      date: addedDate,
+      cipherText: cipherText,
+      status: password.length,
     });
   } catch (error) {
     next(error);
   }
 };
 
+// /vault/password/
 const getUserPasswords = async (req, res, next) => {
   let _id = req.params._id;
-  console.log("called");
-
   try {
-    const usersPassword = await vaultSchema.find({ userId: _id }).lean();
-    res.status(200).json({
-      error: false,
-      message: "Success",
-      data: usersPassword,
-    });
+    // const usersPassword = await vaultSchema.find({ userId: _id }).lean();
+    const usersPassword = await Vault.findAll({ userId: _id });
+    res.ok("Success", usersPassword);
   } catch (error) {
-    res.status(404).json({
-      error: true,
-      message: "Invalid!",
-    });
+    res.notFound("oops! Something went wrong");
   }
 };
 
+// /vault/updatePassword/
 const updatePassword = async (req, res, next) => {
   const { _id, password, pName } = req.body;
   console.log(password);
@@ -203,38 +163,68 @@ const setvaultPassword = async (req, res, next) => {
   }
 };
 
+// /vault/password/:_id
 const getPassword = async (req, res, next) => {
   let _id = req.params._id;
 
   try {
-    const onePassword = await vaultSchema.findOne({ _id });
+    const onePassword = await Vault.findOne({ _id });
     const decryptedPassword = decrypt(onePassword.password);
-    res.status(200).json({
-      error: false,
-      message: "success",
-      data: {
-        password: decryptedPassword,
-      },
+    // res.status(200).json({
+    //   error: false,
+    //   message: "success",
+    //   data: {
+    //     password: decryptedPassword,
+    //   },
+    // });
+    res.ok("success", {
+      password: decryptedPassword,
     });
   } catch (error) {
     next(error);
   }
 };
 
+let invalidCount = 0;
+
 const validateUserPassword = async (req, res, next) => {
   const { email, password } = req.body;
+  const tokenPayload = verifyToken(req);
+  console.log(tokenPayload);
+  // return;
   try {
-    const userPassword = await usersSchema.findOne({ email }).lean();
-    if (userPassword) {
-      console.log(password, userPassword.password);
-      const passmatch = await bcrypt.compare(password, userPassword.password);
+    const user = await User.find({ email: email || tokenPayload.email });
+    const userAuthentication = user.authentication;
+    if (user) {
+      console.log(password, user.password);
+      const passmatch = await bcrypt.compare(password, user.password);
       if (passmatch) {
+        if (!userAuthentication.isBlocked) {
+          User.resetAuthentication(
+            { email: email || tokenPayload.email },
+            "all"
+          );
+        }
         res.status(200).json({
           message: "Password Validated Sucessfully",
         });
       } else {
+        if (
+          userAuthentication.invalidCount >= 3 &&
+          !userAuthentication.isBlocked
+        ) {
+          const blocked = User.blockUser({
+            email: email || tokenPayload.email,
+          });
+          return res.unauthorized("you are blocked", {
+            isBloced: true,
+            blockedTill: blocked.blockedTill,
+          });
+        }
+        User.incrementInvalidCount({ email: email || tokenPayload.email });
         res.status(401).json({
           message: "Incorrect password",
+          userAuthentication,
         });
       }
     } else {
@@ -251,10 +241,8 @@ const deleteOnePassword = async (req, res, next) => {
   const _id = req.params._id;
   try {
     console.log(_id);
-    await vaultSchema.deleteOne({ _id });
-    res.status(200).json({
-      message: "Deleted Sucessfully",
-    });
+    await Vault.deleteOne({ _id });
+    res.ok("Deleted Sucessfully");
   } catch (error) {
     next(error);
   }

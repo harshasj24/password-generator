@@ -6,7 +6,7 @@ const {
   deleteOnePassword,
 } = require("../controllers");
 const express = require("express");
-const { authorizeToken } = require("../auth/auth");
+const { authorizeToken, authorize } = require("../middlewares/auth/auth");
 const router = express.Router();
 // vault
 router.get("/password/:_id", authorizeToken, getUserPasswords);

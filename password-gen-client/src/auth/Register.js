@@ -101,7 +101,7 @@ const Register = () => {
       >
         {({ setFieldValue }) => {
           return (
-            <Form>
+            <Form data-testid="regForm">
               <TextField
                 name={"fName"}
                 size="small"
@@ -195,6 +195,7 @@ const Register = () => {
                 className="d-flex mt-3 ml-auto"
                 color="success"
                 type="submit"
+                data-testid="formSubmit"
               >
                 Sign Up
               </Button>

@@ -6,11 +6,15 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
+import environemnt from "../environments/environment";
 const vaultContex = createContext();
 export const VaultProvider = ({ children }) => {
   const [passwords, setPasswords] = useState([]);
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const baseUrl = environemnt.apiUrl;
   const [updatePass, setUpdatePass] = useState({
     action: null,
     isUpdating: false,
@@ -46,7 +50,7 @@ export const VaultProvider = ({ children }) => {
   const savePassword = async (PasswordDetails) => {
     try {
       const repsonce = await axios.post(
-        "http://localhost:4500/vault/savePasswords",
+        `${baseUrl}/vault/savePasswords`,
         { ...PasswordDetails, _id: user.id },
         {
           headers: headers,
@@ -87,7 +91,7 @@ export const VaultProvider = ({ children }) => {
       pName,
     };
     const responece = await axios.put(
-      "http://localhost:4500/vault/updatePassword",
+      `${baseUrl}/vault/updatePassword`,
       reqData,
       {
         headers: headers,
@@ -107,17 +111,15 @@ export const VaultProvider = ({ children }) => {
       status: responece.data.data.status,
       pName,
     };
-
     setPasswords([...newPasswords]);
     handleSnackbar(true, "Password Updated Sucessfully");
   };
 
   const getAllPasswords = async () => {
-    console.log(user);
     try {
       if (passwords.length === 0) {
         const repsonce = await axios.get(
-          `http://localhost:4500/vault/password/${user.id}`,
+          `${baseUrl}/vault/password/${user?.id}`,
           {
             headers: headers,
           }
@@ -135,11 +137,17 @@ export const VaultProvider = ({ children }) => {
   const checkPassword = async (data) => {
     try {
       const responce = await axios.post(
-        "http://localhost:4500/users/validatePassword",
-        data
+        `${baseUrl}/users/validatePassword`,
+        data,
+        {
+          headers: headers,
+        }
       );
       return responce;
     } catch (error) {
+      if (error.status === 403) {
+        navigate("/access");
+      }
       return false;
     }
   };
@@ -147,7 +155,7 @@ export const VaultProvider = ({ children }) => {
   const deletePassword = async () => {
     try {
       const responce = await axios.delete(
-        `http://localhost:4500/vault/delete/${updatePass._id}`,
+        `${baseUrl}/vault/delete/${updatePass._id}`,
         {
           headers: headers,
         }
@@ -170,12 +178,9 @@ export const VaultProvider = ({ children }) => {
   };
 
   const getOnePassword = async (_id) => {
-    const responce = await axios.get(
-      `http://localhost:4500/vault/getPassword/${_id}`,
-      {
-        headers: headers,
-      }
-    );
+    const responce = await axios.get(`${baseUrl}/vault/getPassword/${_id}`, {
+      headers: headers,
+    });
     return responce;
   };
   const values = useMemo(() => {

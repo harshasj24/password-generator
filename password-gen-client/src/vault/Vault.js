@@ -53,16 +53,26 @@ const Vault = () => {
   const isLoading = useRef(true);
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
-
+  const val = () => {
+    return "myname";
+  };
   const [search, setSearch] = useState("");
   const [confirmAccess, setConfirmAccess] = useState(false);
   const [grantedAccess, setGrantedAccess] = useState(false);
   const [loginPassword, setLoginPassword] = useState("");
+  const [alertClasses, setAlertClasses] = useState(["alert"]);
   // const [modalDetails, setModalDetails] = useState({
   //   open: false,
   //   _id: null,
   //   type: "",
   // });
+
+  const toggleAlertactive = (type) => {
+    if (type === "add") setAlertClasses([...alertClasses, "active-alert"]);
+    if (type === "remove")
+      setAlertClasses([...alertClasses.filter((c) => c !== "alert-active")]);
+  };
+
   const [vaultPassword, setVaultPassword] = useState({
     open: null,
     password: "",
@@ -155,6 +165,10 @@ const Vault = () => {
       setGrantedAccess(true);
     } else {
       setConfirmAccess(true);
+      toggleAlertactive("add");
+      setTimeout(() => {
+        toggleAlertactive("remove");
+      }, 2000);
     }
   };
 
@@ -212,7 +226,7 @@ const Vault = () => {
     <div className="vault--wrapper">
       <div className="container">
         <div className="vault-header">
-          <h3>Welcome, {user?.fName + " " + user.lName}</h3>
+          <h3>Welcome, {user?.fName + " " + user?.lName}</h3>
           <div className="search-filed">
             <TextField
               size="small"
@@ -233,9 +247,10 @@ const Vault = () => {
           </div>
         </div>
         <div className="vault-cards-section p-2">
-          {passCard.map((val) => {
+          {passCard.map((val, i) => {
             return (
               <VaultCard
+                key={i}
                 title={val.title}
                 length={val.length}
                 color={val?.color}
@@ -278,6 +293,13 @@ const Vault = () => {
           {modalDetails.type === "view" && (
             <div className="vault-modal">
               <div className="vault-modal__header">Password Options</div>
+              <Alert
+                sx={{ padding: "0px 16px" }}
+                className={alertClasses.join(" ")}
+                severity="error"
+              >
+                Invalid Password
+              </Alert>
               <div className="vault-modal__body">
                 <div className="body__icons d-flex">
                   {!confirmAccess ? (

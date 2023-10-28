@@ -12,6 +12,7 @@ const Auth = () => {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
   const { breakPointObserver, breakPoint } = usePassword();
+
   useEffect(() => {
     breakPointObserver();
     console.log(breakPoint);

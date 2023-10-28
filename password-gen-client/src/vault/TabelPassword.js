@@ -126,7 +126,7 @@ const TabelPassword = ({ passwords, setModal, search, handleModalOpen }) => {
           </TableHead>
           <TableBody data-testid="tableBody">
             {passwords.filter((data) =>
-              data.pName.toLowerCase().includes(search.toLowerCase())
+              data.pName?.toLowerCase().includes(search?.toLowerCase())
             ).length > 0 ? (
               passwords
                 .filter((data) =>
